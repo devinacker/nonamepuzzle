@@ -127,14 +127,14 @@ function love.keypressed(k, r)
 
 	-- R = restart (or change?) board
 	if k == 'r' and not r then
-			if love.keyboard.isDown('lshift') or
-			   love.keyboard.isDown('rshift') then
-				randomize()
-			else
-				setBoard(1)
-			end
-			
-			game.counter = 0
+		if love.keyboard.isDown('lshift') or
+		   love.keyboard.isDown('rshift') then
+			randomize()
+		else
+			setBoard(1)
+		end
+		
+		game.counter = 0
 			
 	-- Z/X to select piece
 	elseif k == 'x' and not r then
@@ -245,12 +245,12 @@ end
 function love.draw()
 	love.graphics.setColor({255, 255, 255, 255})
 	love.graphics.print('press Z/X to select piece, arrows to move, C to detonate, R to restart, shift-R to randomize', 8, 8)
-    love.graphics.print('c: '..game.counter, 8, 24)
-    love.graphics.print('s: '..game.state, 8, 40)
-    love.graphics.print('ct: '..game.changeTime, 8, 56)
-    love.graphics.print('#cp: '..#game.changePoints, 8, 72)
+	love.graphics.print('c: '..game.counter, 8, 24)
+	love.graphics.print('s: '..game.state, 8, 40)
+	love.graphics.print('ct: '..game.changeTime, 8, 56)
+	love.graphics.print('#cp: '..#game.changePoints, 8, 72)
 	love.graphics.print('cht: '..game.chainTime, 8, 88)
-    love.graphics.print('#chp: '..#game.chainPoints, 8, 104)
+	love.graphics.print('#chp: '..#game.chainPoints, 8, 104)
 	
 	local l = 32 * board.l
 	local w = 32 * board.w
