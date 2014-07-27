@@ -158,12 +158,14 @@ function love.keypressed(k, r)
 		table.insert(game.chainPoints, {x = piece.x, y = piece.y, color = piece.color})
 		table.remove(board.pieces, currPiece)
 		
-		print("new #board.pieces = "..#board.pieces)
-		if currPiece > #board.pieces then
-			currPiece = #board.pieces
+		-- disable piece animation until the chain is over
+		nextPiece = currPiece
+		currPiece = -1
+		if nextPiece > #board.pieces then
+			nextPiece = #board.pieces
 		end
-		print("new currPiece = "..currPiece)
-	-- arrows to move (TODO)
+		
+	-- arrows to move
 	elseif k == 'left' and piece.x > 1 and board[piece.y][piece.x - 1] > 0 then
 		piece.x = piece.x - 1
 	elseif k == 'right' and piece.x < board.w and board[piece.y][piece.x + 1] > 0 then
@@ -225,6 +227,9 @@ function love.update(dt)
 			game.changeTime = 1
 		elseif #game.chainPoints > 0 then
 			game.chainTime = 30
+		else
+			-- re-enable piece animation
+			currPiece = nextPiece
 		end
 	-- or wait until the next part of the color change
 	elseif game.changeTime > 0 then
@@ -273,7 +278,7 @@ function love.draw()
 		
 		local x = win.w/2 - (w / 2) + ((piece.x - 1) * 32) + 6
 		local y = win.h/2 - (l / 2) + ((piece.y - 1) * 32) - 4
-		-- wavy sine animation
+		-- wavy sine animation (when not detonating)
 		if i == currPiece then
 			y = y + 6 * math.sin(math.pi * 8 * game.counter / 360) - 6
 		end
