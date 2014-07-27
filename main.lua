@@ -164,13 +164,13 @@ function love.keypressed(k, r)
 		end
 		print("new currPiece = "..currPiece)
 	-- arrows to move (TODO)
-	elseif k == 'left' and piece.x > 1 then
+	elseif k == 'left' and piece.x > 1 and board[piece.y][piece.x - 1] > 0 then
 		piece.x = piece.x - 1
-	elseif k == 'right' and piece.x < board.w then
+	elseif k == 'right' and piece.x < board.w and board[piece.y][piece.x + 1] > 0 then
 		piece.x = piece.x + 1
-	elseif k == 'up' and piece.y > 1 then
+	elseif k == 'up' and piece.y > 1 and board[piece.y - 1][piece.x] > 0 then
 		piece.y = piece.y - 1
-	elseif k == 'down' and piece.y < board.l then
+	elseif k == 'down' and piece.y < board.l and board[piece.y + 1][piece.x] > 0 then
 		piece.y = piece.y + 1
 	end
 end
@@ -258,7 +258,7 @@ function love.draw()
 	-- draw board
 	for y = 0, board.l - 1 do
 		for x = 0, board.w - 1 do
-			if board[y + 1][x + 1] then
+			if board[y + 1][x + 1] > 0 then
 				love.graphics.setColor(colors[board[y + 1][x + 1]])
 				love.graphics.rectangle("fill", win.w/2 - (w / 2) + (x * 32),
 				                        win.h/2 - (l / 2) + (y * 32),
